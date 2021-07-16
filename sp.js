@@ -1,3 +1,5 @@
+fs = require('fs');
+
 class Log {
     constructor(logNumber, logDateTime, logEntry) {
       this.logNumber = logNumber;
@@ -24,3 +26,8 @@ addLog('This is a second test log');
 
 addLog('This is a third test log');
 
+
+// fs.writeFile('test.txt', String(logs), function (err) {
+//     if (err) return console.log(err);
+//     console.log('done');
+//   });
