@@ -7,7 +7,7 @@ async function getAllLogs(url = '') {
     return response.json();
 }
 
-getAllLogs(logPath).then(logs => { console.log(logs) });
+//getAllLogs(logPath).then(logs => { console.log(logs) });
 
 
 
@@ -29,3 +29,15 @@ const testLog = {
     content: "A test to see if the front end works"
 };
 
+
+async function populateLogsForTesting() {
+    for (let i=0; i<100; i++) {
+        const log = {
+            author: "testPop",
+            subject: "test number "+String(i),
+            content: "This is test number "+String(i)+" automatically created by the populateLogsForTesting function."
+        }
+        await postLog(logPath, log);
+        console.log("posted "+String(i));
+    }
+}

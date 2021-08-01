@@ -69,25 +69,25 @@
   
   .nav { grid-area: nav; }
   
-  .menuTop { grid-area: menuTop; border-bottom: 2px solid #5eaa57;}
+  .menuTop { grid-area: menuTop; border-bottom: 2px solid #5eaa57; padding-left: 5px;}
   
-  .menuButtons { grid-area: menuButtons; border-bottom: 2px solid #5eaa57;}
+  .menuButtons { grid-area: menuButtons; border-bottom: 2px solid #5eaa57; padding-left: 5px;}
   
-  .logTop { grid-area: logTop; border-bottom: 2px solid #5eaa57;}
+  .logTop { grid-area: logTop; border-bottom: 2px solid #5eaa57; padding-left: 5px;}
   
-  .logSec { grid-area: logSec; border-bottom: 2px solid #5eaa57;}
+  .logSec { grid-area: logSec; border-bottom: 2px solid #5eaa57; padding-left: 5px;}
   
-  .menuLog1 { grid-area: menuLog1; border-bottom: 2px solid #5eaa57;}
+  .menuLog1 { grid-area: menuLog1; border: 2px solid #5eaa57; padding-left: 5px;}
   
-  .menuLog2 { grid-area: menuLog2; border-bottom: 2px solid #5eaa57;}
+  .menuLog2 { grid-area: menuLog2; border: 2px solid #5eaa57; padding-left: 5px;}
   
-  .menuLog3 { grid-area: menuLog3; border-bottom: 2px solid #5eaa57;}
+  .menuLog3 { grid-area: menuLog3; border: 2px solid #5eaa57; padding-left: 5px;}
   
-  .menuLog4 { grid-area: menuLog4; border-bottom: 2px solid #5eaa57;}
+  .menuLog4 { grid-area: menuLog4; border: 2px solid #5eaa57; padding-left: 5px;}
   
-  .menuLog5 { grid-area: menuLog5; border-bottom: 2px solid #5eaa57;}
+  .menuLog5 { grid-area: menuLog5; border: 2px solid #5eaa57; padding-left: 5px;}
   
-  .menuLog6 { grid-area: menuLog6; border-bottom: 2px solid #5eaa57;}
+  .menuLog6 { grid-area: menuLog6; border: 2px solid #5eaa57; padding-left: 5px;}
   
   .logDisplay { grid-area: logDisplay; }
 

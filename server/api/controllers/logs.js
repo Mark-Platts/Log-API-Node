@@ -1,6 +1,20 @@
 const mongoose = require("mongoose");
 const Log = require("../models/log");
 
+exports.logs_count = (req, res) => {
+    Log.countDocuments({})
+        .exec()
+        .then(count => {
+            res.json({ count: count });
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            });
+        });
+}
+
 exports.logs_get_all = (req, res) => {
     Log.find()
         .select("_id author subject timeStamp content")
@@ -23,6 +37,48 @@ exports.logs_get_all = (req, res) => {
                 })
             };
             res.status(200).json(response);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            });
+        });
+};
+
+exports.logs_get_page = (req, res) => {
+    const pageNumber = req.params.pageNumber;
+    const firstLog = pageNumber*6 - 6;
+    Log.find()
+        .select("_id author subject timeStamp content")
+        .sort({"_id":1})
+        .exec()
+        .then(docs => {
+            const responseAll = {
+                count: docs.length,
+                logs: docs.map(doc => {
+                    return {
+                        request: {
+                            type: "GET",
+                            url: "http://localhost:3000/products/" + doc._id
+                        },
+                        _id: doc._id,
+                        author: doc.author,
+                        subject: doc.subject,
+                        timeStamp: doc.timeStamp,
+                        content: doc.content
+                    };
+                })
+            };
+            let responsePage = [];
+            for (let i=firstLog; i<firstLog+6; i++) {
+                if (i < responseAll.count) {
+                    responsePage.push(responseAll.logs[i]);
+                } else {
+                    responsePage.push(null);
+                }
+            }
+            res.status(200).json(responsePage);
         })
         .catch(err => {
             console.log(err);

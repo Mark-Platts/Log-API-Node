@@ -5,11 +5,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./styles/styles.css">
-    <!-- <script src="sp.js"></script> -->
+    <script src="api.js"></script>
+    <script src="logic.js"></script>
     <title> Logger </title>
   </head>
 
-  <body>
+  <body onload="initialize()">
     <header></header>
 
     <div class="container">
@@ -21,35 +22,41 @@
         </nav>
       </div>
       <div class="menuTop"> Logs: </div>
-      <div class="menuButtons"> pages </page></div>
+      <div class="menuButtons"> 
+        <button> &lt &lt </button> 
+        <button> &lt </button> 
+        <div id="pageNumber" style="display: inline">Page: 1</div>  
+        <button onclick="pageNumberUp()"> &gt </button> 
+        <button> &gt &gt </button> 
+      </div>
       <div class="logTop"> Current Log Info </div>
       <div class="logSec"> Log Controls</div>
-      <div class="menuLog1">
+      <div id="menuLog1" class="menuLog1">
         <p>Author</p>
         <p>TimeStamp</p>
         <p>Subject</p>
       </div>
-      <div class="menuLog2">
+      <div id="menuLog2" class="menuLog2">
         <p>Author</p>
         <p>TimeStamp</p>
         <p>Subject</p>
       </div>
-      <div class="menuLog3">
+      <div id="menuLog3" class="menuLog3">
         <p>Author</p>
         <p>TimeStamp</p>
         <p>Subject</p>
       </div>
-      <div class="menuLog4">
+      <div id="menuLog4" class="menuLog4">
         <p>Author</p>
         <p>TimeStamp</p>
         <p>Subject</p>
       </div>
-      <div class="menuLog5">
+      <div id="menuLog5" class="menuLog5">
         <p>Author</p>
         <p>TimeStamp</p>
         <p>Subject</p>
       </div>
-      <div class="menuLog6">
+      <div id="menuLog6" class="menuLog6">
         <p>Author</p>
         <p>TimeStamp</p>
         <p>Subject</p>

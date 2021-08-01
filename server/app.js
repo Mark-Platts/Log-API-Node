@@ -3,7 +3,7 @@ const app = express();
 const mongoose = require("mongoose");
 
 //connect to local mongo db
-mongoose.connect('mongodb://localhost:27017/Log-API-node-db', {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect('mongodb://localhost:27017/Log-API-node-db-test', {useNewUrlParser: true, useUnifiedTopology: true});
 
 const logRoutes = require("./api/routes/logs");
 
