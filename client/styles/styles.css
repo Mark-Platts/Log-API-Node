@@ -71,27 +71,104 @@
   
   .menuTop { grid-area: menuTop; border-bottom: 2px solid #5eaa57; padding-left: 5px;}
   
-  .menuButtons { grid-area: menuButtons; border-bottom: 2px solid #5eaa57; padding-left: 5px;}
+  .menuButtons { 
+    grid-area: menuButtons; 
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: space-around;
+    border-bottom: 2px solid #5eaa57; 
+    padding-left: 5px;
+    padding-bottom: 4px;
+  }
   
-  .logTop { grid-area: logTop; border-bottom: 2px solid #5eaa57; padding-left: 5px;}
+  .logTop { 
+    grid-area: logTop; 
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    border-bottom: 2px solid #5eaa57; 
+    padding-left: 5px;
+    padding-top: 2px;
+  }
   
-  .logSec { grid-area: logSec; border-bottom: 2px solid #5eaa57; padding-left: 5px;}
+  .logSec { 
+    grid-area: logSec; 
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    border-bottom: 2px solid #5eaa57; 
+    padding-left: 5px;
+  }
   
   .menuLog1 { grid-area: menuLog1; border: 2px solid #5eaa57; padding-left: 5px;}
   
+  .menuLog1:hover {
+    background-color: #1d361a;
+  }
+
   .menuLog2 { grid-area: menuLog2; border: 2px solid #5eaa57; padding-left: 5px;}
+
+  .menuLog2:hover {
+    background-color: #1d361a;
+  }
   
   .menuLog3 { grid-area: menuLog3; border: 2px solid #5eaa57; padding-left: 5px;}
+
+  .menuLog3:hover {
+    background-color: #1d361a;
+  }
   
   .menuLog4 { grid-area: menuLog4; border: 2px solid #5eaa57; padding-left: 5px;}
+
+  .menuLog4:hover {
+    background-color: #1d361a;
+  }
   
   .menuLog5 { grid-area: menuLog5; border: 2px solid #5eaa57; padding-left: 5px;}
+
+  .menuLog5:hover {
+    background-color: #1d361a;
+  }
   
   .menuLog6 { grid-area: menuLog6; border: 2px solid #5eaa57; padding-left: 5px;}
+
+  .menuLog6:hover {
+    background-color: #1d361a;
+  }
   
-  .logDisplay { grid-area: logDisplay; }
+  .logDisplay { grid-area: logDisplay; padding-left: 8px;}
 
   .menuArea { grid-area: 2 / 1 / 10 / 2; border: 2px solid #5eaa57;}
   
   .logArea { grid-area: 2 / 2 / 10 / 3; border: 2px solid #5eaa57;}
+
+  .pageButton {
+    padding: 1px;
+    width: 2rem;
+    height: 2rem;
+    border: 1px solid #5eaa57;
+    background-color: #000f01;
+  }
+
+  .pageButton:hover {
+    background-color: #1d361a;
+  }
+
+  .logButton {
+    padding-right: 5px;
+    margin-right: 5px;
+    width: 5rem;
+    height: 2rem;
+    border: 1px solid #5eaa57;
+    background-color: #000f01;
+  }
+
+  .logButton:hover {
+    background-color: #1d361a;
+  }
   
+  #pageNumber {
+    display: inline;
+    padding-top: 2px;
+  }

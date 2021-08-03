@@ -23,45 +23,53 @@
       </div>
       <div class="menuTop"> Logs: </div>
       <div class="menuButtons"> 
-        <button> &lt &lt </button> 
-        <button> &lt </button> 
-        <div id="pageNumber" style="display: inline">Page: 1</div>  
-        <button onclick="pageNumberUp()"> &gt </button> 
-        <button> &gt &gt </button> 
+        <button onclick="pageTurnStart()" class="pageButton"> &lt &lt </button> 
+        <button onclick="pageTurnDown()" class="pageButton"> &lt </button> 
+        <div id="pageNumber">Page: 1</div>  
+        <button onclick="pageTurnUp()" class="pageButton"> &gt </button> 
+        <button onclick="pageTurnEnd()" class="pageButton"> &gt &gt </button> 
       </div>
-      <div class="logTop"> Current Log Info </div>
-      <div class="logSec"> Log Controls</div>
-      <div id="menuLog1" class="menuLog1">
+      <div id="logTop" class="logTop">
+        <p style="display:inline;">Author: </p><p style="display:inline;">Date: </p><p style="display:inline;">Subject: </p>
+      </div>
+      <div class="logSec">
+        <button class="logButton">New Log</button>
+        <button class="logButton">Edit Log</button>
+        <button class="logButton">Delete Log</button>
+      </div>
+      <div id="menuLog1" class="menuLog1" onclick="loadLog(0)">
         <p>Author</p>
         <p>TimeStamp</p>
         <p>Subject</p>
       </div>
-      <div id="menuLog2" class="menuLog2">
+      <div id="menuLog2" class="menuLog2" onclick="loadLog(1)">
         <p>Author</p>
         <p>TimeStamp</p>
         <p>Subject</p>
       </div>
-      <div id="menuLog3" class="menuLog3">
+      <div id="menuLog3" class="menuLog3" onclick="loadLog(2)">
         <p>Author</p>
         <p>TimeStamp</p>
         <p>Subject</p>
       </div>
-      <div id="menuLog4" class="menuLog4">
+      <div id="menuLog4" class="menuLog4" onclick="loadLog(3)">
         <p>Author</p>
         <p>TimeStamp</p>
         <p>Subject</p>
       </div>
-      <div id="menuLog5" class="menuLog5">
+      <div id="menuLog5" class="menuLog5" onclick="loadLog(4)">
         <p>Author</p>
         <p>TimeStamp</p>
         <p>Subject</p>
       </div>
-      <div id="menuLog6" class="menuLog6">
+      <div id="menuLog6" class="menuLog6" onclick="loadLog(5)">
         <p>Author</p>
         <p>TimeStamp</p>
         <p>Subject</p>
       </div>
-      <div class="logDisplay"></div>
+      <div id="logDisplay" class="logDisplay">
+        <p>Choose a log to view from the left.</p>
+      </div>
       <div class="menuArea"></div>
       <div class="logArea"></div>
     </div>
