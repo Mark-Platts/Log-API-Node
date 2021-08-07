@@ -20,11 +20,11 @@ async function postLog(url = '', data = {}) {
         },
         body: JSON.stringify(data) // body data type must match "Content-Type" header
     });
-    return response.json(); // parses JSON response into native JavaScript objects
+    return response; // parses JSON response into native JavaScript objects
 }
 
 const testLog = {
-    author: "front end",
+    author: "logTest",
     subject: "front end post test",
     content: "A test to see if the front end works"
 };
@@ -39,5 +39,15 @@ async function populateLogsForTesting() {
         }
         await postLog(logPath, log);
         console.log("posted "+String(i));
+    }
+}
+
+
+async function logrettest() {
+    try {
+        await postLog(logPath, testLog);
+        console.log("success");
+    } catch {
+        console.log("failure");
     }
 }

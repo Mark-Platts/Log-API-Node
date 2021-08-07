@@ -73,7 +73,7 @@ exports.logs_get_page = (req, res) => {
             let responsePage = [];
             for (let i=firstLog; i<firstLog+6; i++) {
                 if (i < responseAll.count) {
-                    responsePage.push(responseAll.logs[i]);
+                    responsePage.push(responseAll.logs[responseAll.count - i - 1]);
                 } else {
                     responsePage.push(null);
                 }

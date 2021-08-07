@@ -2,9 +2,11 @@ const menu = {
     pageCount: 0,
     pageNumber: 1,
     logs: [null, null, null, null, null, null],
-    logLoaded: false,
+    logLoaded: null,
     creatingLog: false,
-    editingLog: false
+    editingLog: false,
+    deletingLog: false,
+    dateIntervalHolder: null
 };
 
 
@@ -41,10 +43,12 @@ function fillMenuItems(itemNumber, log) {
 
 //for the > button on the page, increases the page number by 1 and updates the menu
 async function pageTurnUp() {
-    menu.pageNumber++;
-    document.getElementById("pageNumber").innerHTML = 'Page: ' + String(menu.pageNumber);
-    await updateMenu(menu.pageNumber);
-    fillMenu();
+    if (menu.pageNumber < menu.pageCount) {
+        menu.pageNumber++;
+        document.getElementById("pageNumber").innerHTML = 'Page: ' + String(menu.pageNumber);
+        await updateMenu(menu.pageNumber);
+        fillMenu();
+    }
 }
 
 //for the < button on the page, decreases the page number by 1 and updates the menu
@@ -82,7 +86,7 @@ function loadLog(menuNumber) {
                                                     +'</p><p style="display:inline;">Date: '+String(log.timeStamp)
                                                     +'</p><p style="display:inline;">Subject: '+String(log.subject)+'</p>';
     document.getElementById("logDisplay").innerHTML = String(log.content);
-    menu.logLoaded = true;
+    menu.logLoaded = menuNumber;
 }
 
 //function for all on-load logic
@@ -92,3 +96,131 @@ async function initialize() {
     fillMenu();
 }
 
+//sets up the screen as it upon load
+function startView() {
+    clearDateInterval();
+    menu.creatingLog = false;
+    menu.editingLog = false;
+    menu.deletingLog = false;
+    menu.logLoaded = null;
+    document.getElementById("logTop").innerHTML = '<p style="display:inline;">Author: </p><p style="display:inline;">Date: </p><p style="display:inline;">Subject: </p>';
+    document.getElementById("logSec").innerHTML = '<button class="logButton" onclick="newLogButton()">New Log</button>'
+    +'<button class="logButton" onclick="editLogButton()">Edit Log</button>'
+    +'<button class="logButton" onclick="deleteLogButton()">Delete Log</button>';
+    document.getElementById("logDisplay").innerHTML = '<p>Choose a log to view from the left.</p>';
+}
+
+//returns to the default view and loads last log opened
+function cancelView() {
+    clearDateInterval();
+    startView();
+    if (menu.logLoaded != null) {
+        loadLog(menu.logLoaded);
+    }
+}
+
+//updates the date shown in the log creation view
+function newLogDateShow() {
+    const currentDate = Date();
+    document.getElementById("newLogDate").innerHTML = currentDate;
+}
+
+//clears the date interval if one is present
+function clearDateInterval() {
+    if (menu.dateIntervalHolder) {
+        clearInterval(menu.dateIntervalHolder);
+        menu.dateIntervalHolder = null;
+    }
+}
+
+//sets the button bar for log creation or editing
+function confirmCancelButtonBar() {
+    document.getElementById("logSec").innerHTML = '<button class="logButton" onclick="confirmButtonBar()">Submit Log</button>'
+    +'<button class="logButton" onclick="cancelView()">Cancel</button>';
+}
+
+//sets up page to create a new log
+function newLogButton() {
+    menu.creatingLog = true;
+    document.getElementById("logTop").innerHTML = '<p style="display:inline;">Author: <input type="text" id="authorIn" class="topIn"></p>'
+    +'<p style="display:inline;">Date: <span id="newLogDate"></span></p>'
+    +'<p style="display:inline;">Subject: <input type="text" id="subjectIn" class="topIn"></p>';
+    confirmCancelButtonBar();
+    document.getElementById("logDisplay").innerHTML = '<p>Enter Log Below:</p> <textarea id="contentIn" name="contentIn" class="displayIn"></textarea>'
+    //'<p>Enter Log Below:</p> <input type+"text" id="contentIn" class="displayIn">'
+    document.getElementById("contentIn").focus();
+    newLogDateShow();
+    if (!menu.dateIntervalHolder) {
+        menu.dateIntervalHolder = setInterval(newLogDateShow, 1000);
+    }
+}
+
+
+//sets up button bar to confirm or cancel an action
+function confirmButtonBar() {
+    document.getElementById("logSec").innerHTML = '<p style="padding-right:10px; padding-top:5px;">Confirm Log Submission:</p>'
+    +'<button class="logButton" onclick="submitChoice()">Confirm</button>'
+    +'<button class="logButton" onclick="returnToLastView()">Go Back</button>';
+}
+
+//checks what to do if a confirm button is pressed
+function submitChoice() {
+    if (menu.creatingLog) {
+        submitLog();
+    } else if (menu.editingLog) {
+        submitEdit();
+    } else if (menu.deletingLog) {
+        submitDelete();
+    }
+}
+
+//sends off log and sets up next appropriate view
+async function submitLog() {
+    const log = {
+        author: document.getElementById("authorIn").value,
+        subject: document.getElementById("subjectIn").value,
+        content: document.getElementById("contentIn").value
+    };
+    const response = await postLog(logPath, log);
+    if (response.status == 201) {
+        await updateMenu(menu.pageNumber);
+        await updatePageCount();
+        fillMenu();
+        startView();
+        document.getElementById("logDisplay").innerHTML = '<p>Log Created Successfully. Choose a log to view from the left.</p>';
+    } else {
+        document.getElementById("logSec").innerHTML = '<p style="padding-right:10px; padding-top:5px;">Log Submission Failed. Check all fields are completed. Try again?<p>'
+        +'<button class="logButton" onclick="confirmButtonBar()">Submit Log</button>'
+        +'<button class="logButton" onclick="cancelView()">Cancel</button>';
+    }
+}
+
+//returns the view to the previous view if the go back or cancel buttons are pressed
+function returnToLastView() {
+    if (menu.creatingLog) {
+        confirmCancelButtonBar();
+    }
+}
+
+function editLogButton() {
+    if (menu.logLoaded != null) {
+        menu.editingLog = true;
+        document.getElementById("logTop").innerHTML = '<p style="display:inline;">Author: <input type="text" id="authorIn" class="topIn"></p>'
+        +'<p style="display:inline;">Date: <span id="newLogDate"></span></p>'
+        +'<p style="display:inline;">Subject: <input type="text" id="subjectIn" class="topIn"></p>';
+        confirmCancelButtonBar();
+        document.getElementById("logDisplay").innerHTML = '<p>Enter Log Below:</p> <textarea id="contentIn" name="contentIn" class="displayIn"></textarea>'
+        document.getElementById("authorIn").value = menu.logs[menu.logLoaded].author;
+        document.getElementById("subjectIn").value = menu.logs[menu.logLoaded].subject;
+        document.getElementById("contentIn").value = menu.logs[menu.logLoaded].content;
+        document.getElementById("contentIn").focus();
+        newLogDateShow();
+        if (!menu.dateIntervalHolder) {
+            menu.dateIntervalHolder = setInterval(newLogDateShow, 1000);
+        }
+    }
+}
+
+function deleteLogButton() {
+    return
+}

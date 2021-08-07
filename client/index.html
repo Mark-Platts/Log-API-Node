@@ -32,10 +32,10 @@
       <div id="logTop" class="logTop">
         <p style="display:inline;">Author: </p><p style="display:inline;">Date: </p><p style="display:inline;">Subject: </p>
       </div>
-      <div class="logSec">
-        <button class="logButton">New Log</button>
-        <button class="logButton">Edit Log</button>
-        <button class="logButton">Delete Log</button>
+      <div id="logSec" class="logSec">
+        <button class="logButton" onclick="newLogButton()">New Log</button>
+        <button class="logButton" onclick="editLogButton()">Edit Log</button>
+        <button class="logButton" onclick="deleteLogButton()">Delete Log</button>
       </div>
       <div id="menuLog1" class="menuLog1" onclick="loadLog(0)">
         <p>Author</p>
