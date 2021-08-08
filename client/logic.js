@@ -260,3 +260,20 @@ function deleteLogButton() {
         confirmDeleteButtonBar();
     }
 }
+
+async function submitDelete() {
+    const logId = menu.logs[menu.logLoaded]._id;
+    const response = await deleteLog(logPath+logId);
+    if (response.status == 200) {
+        const page = menu.pageNumber;
+        const log = menu.logLoaded;
+        startView();
+        await updateMenu(page);
+        fillMenu();
+        document.getElementById("logDisplay").innerHTML = '<p>Log Successfully deleted. Choose a log to view.</p>'
+    } else {
+        document.getElementById("logSec").innerHTML = '<p style="padding-right:10px; padding-top:5px;">Log Deletion Failed. Try again?<p>'
+        +'<button class="logButton" onclick="confirmButtonBar()">Delete Log</button>'
+        +'<button class="logButton" onclick="cancelView()">Cancel</button>';
+    }
+}

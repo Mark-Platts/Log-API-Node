@@ -33,6 +33,14 @@ async function patchLog(url = '', data = []) {
     return response;
 }
 
+//delete log
+async function deleteLog(url = '') {
+    const response = await fetch (url, {
+        method: 'DELETE'
+    });
+    return response;
+}
+
 
 
 const testLog = {
