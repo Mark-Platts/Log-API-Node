@@ -9,8 +9,6 @@ async function getAllLogs(url = '') {
 
 //getAllLogs(logPath).then(logs => { console.log(logs) });
 
-
-
 //post log
 async function postLog(url = '', data = {}) {
     const response = await fetch(url, {
@@ -23,12 +21,29 @@ async function postLog(url = '', data = {}) {
     return response; // parses JSON response into native JavaScript objects
 }
 
+//patch log
+async function patchLog(url = '', data = []) {
+    const response = await fetch (url, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    });
+    return response;
+}
+
+
+
 const testLog = {
     author: "logTest",
     subject: "front end post test",
     content: "A test to see if the front end works"
 };
 
+const testPatch = [
+    { "propName": "author", "value": "newAuthor"}
+];
 
 async function populateLogsForTesting() {
     for (let i=0; i<100; i++) {

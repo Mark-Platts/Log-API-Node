@@ -85,7 +85,7 @@ function loadLog(menuNumber) {
                                                     +String(log.author)
                                                     +'</p><p style="display:inline;">Date: '+String(log.timeStamp)
                                                     +'</p><p style="display:inline;">Subject: '+String(log.subject)+'</p>';
-    document.getElementById("logDisplay").innerHTML = String(log.content);
+    document.getElementById("logDisplay").innerHTML = '<p>'+String(log.content)+'</p>';
     menu.logLoaded = menuNumber;
 }
 
@@ -112,10 +112,11 @@ function startView() {
 
 //returns to the default view and loads last log opened
 function cancelView() {
+    const log = menu.logLoaded;
     clearDateInterval();
     startView();
-    if (menu.logLoaded != null) {
-        loadLog(menu.logLoaded);
+    if (log != null) {
+        loadLog(log);
     }
 }
 
@@ -156,9 +157,16 @@ function newLogButton() {
 }
 
 
-//sets up button bar to confirm or cancel an action
+//sets up button bar to confirm or cancel a create or edit action
 function confirmButtonBar() {
     document.getElementById("logSec").innerHTML = '<p style="padding-right:10px; padding-top:5px;">Confirm Log Submission:</p>'
+    +'<button class="logButton" onclick="submitChoice()">Confirm</button>'
+    +'<button class="logButton" onclick="returnToLastView()">Go Back</button>';
+}
+
+//sets up button bar to confirm or cancel a delete action
+function confirmDeleteButtonBar() {
+    document.getElementById("logSec").innerHTML = '<p style="padding-right:10px; padding-top:5px;">Confirm Deletion:</p>'
     +'<button class="logButton" onclick="submitChoice()">Confirm</button>'
     +'<button class="logButton" onclick="returnToLastView()">Go Back</button>';
 }
@@ -197,8 +205,10 @@ async function submitLog() {
 
 //returns the view to the previous view if the go back or cancel buttons are pressed
 function returnToLastView() {
-    if (menu.creatingLog) {
+    if (menu.creatingLog || menu.editingLog) {
         confirmCancelButtonBar();
+    } else if (menu.deletingLog) {
+        cancelView();
     }
 }
 
@@ -221,6 +231,32 @@ function editLogButton() {
     }
 }
 
+async function submitEdit() {
+    const addDate = '\n <br> edited: ' + Date();
+    const edit = [
+        { "propName": "author", "value": document.getElementById("authorIn").value},
+        { "propName": "subject", "value": document.getElementById("subjectIn").value},
+        { "propName": "content", "value": document.getElementById("contentIn").value + addDate}
+    ]
+    const logId = menu.logs[menu.logLoaded]._id;
+    const response = await patchLog(logPath+logId, edit);
+    if (response.status == 200) {
+        const page = menu.pageNumber;
+        const log = menu.logLoaded;
+        startView();
+        await updateMenu(page);
+        fillMenu();
+        loadLog(log);
+    } else {
+        document.getElementById("logSec").innerHTML = '<p style="padding-right:10px; padding-top:5px;">Edit Submission Failed. Check all fields are completed. Try again?<p>'
+        +'<button class="logButton" onclick="confirmButtonBar()">Submit Log</button>'
+        +'<button class="logButton" onclick="cancelView()">Cancel</button>';
+    }
+}
+
 function deleteLogButton() {
-    return
+    if (!menu.creatingLog && !menu.editingLog && menu.logLoaded != null) {
+        menu.deletingLog = true;
+        confirmDeleteButtonBar();
+    }
 }
